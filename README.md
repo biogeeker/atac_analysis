@@ -1,6 +1,6 @@
 ## ATAC-seq summary
 
-Some useful blogs, papers and scripts for ATAC-seq:
+Some useful blogs, papers and scripts for ATAC-seq when I used during my own projects:
 - [ChIP-seq-analysis](https://github.com/crazyhottommy/ChIP-seq-analysis) (Tang Ming)
 - [ATAC-seq data analysis: from FASTQ to peaks](https://yiweiniu.github.io/blog/2019/03/ATAC-seq-data-analysis-from-FASTQ-to-peaks/) (yiweiniu blog)
 - [ATAC-seq normalization method can significantly affect differential accessibility analysis and interpretation](https://epigeneticsandchromatin.biomedcentral.com/articles/10.1186/s13072-020-00342-y) (normalization analysis)
