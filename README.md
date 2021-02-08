@@ -1,6 +1,6 @@
 ## ATAC-seq analysis
 
-Some useful links below, I highly recommend:
+I highly recommend blogs:
 >[ChIP-seq-analysis](https://github.com/crazyhottommy/ChIP-seq-analysis)
 >
 >[ATAC-seq data analysis: from FASTQ to peaks](https://yiweiniu.github.io/blog/2019/03/ATAC-seq-data-analysis-from-FASTQ-to-peaks/)
