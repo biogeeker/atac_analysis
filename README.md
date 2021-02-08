@@ -1,4 +1,4 @@
-## ATAC-seq analysis
+## ATAC-seq summary
 
 Some useful blogs, papers and scripts for ATAC-seq:
 - [ChIP-seq-analysis](https://github.com/crazyhottommy/ChIP-seq-analysis) (Tang Ming)
