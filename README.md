@@ -1,4 +1,4 @@
-### ATAC-seq analysis
+## ATAC-seq analysis
 
 Some useful links below, I highly recommend:
 >[ChIP-seq-analysis](https://github.com/crazyhottommy/ChIP-seq-analysis)
@@ -13,5 +13,3 @@ Review paper for ATAC-seq (2020):
 
 Snakemake pipeline for ATAC-seq:
 - [pyflow-ATACseq](https://github.com/crazyhottommy/pyflow-ATACseq)
-
---- *End* ---
