@@ -31,6 +31,7 @@ $ gatk CollectInsertSizeMetrics -I MY_noDups.bam -O MY_insert_size_metrics.txt -
 ```
 
 The forth step is to call peaks:
+>If you followed original protocol for ATAC-Seq, you should get Paired-End reads. If so, I would suggest you just use --format BAMPE to let MACS2 pileup the whole fragments in general. But if you want to focus on looking for where the ‘cutting sites’ are, then --nomodel --shift -100 --extsize 200 should work. —— By Liu
 ```
 # We use macs2 to call peaks
 # only call NFR peaks
@@ -39,7 +40,7 @@ $ macs2 callpeak -f BAMPE -g 8.8e7 --keep-dup all -n MY_NFR -t MY_NFR.bam --outd
 # filtering blacklist regions: delete extreamly high peaks
 ```
 
-The fifth step is to detect TF footprints [RGT-HINT](http://www.regulatory-genomics.org/motif-analysis/introduction/):
+The fifth step is to detect TF footprints using [RGT-HINT](http://www.regulatory-genomics.org/motif-analysis/introduction/):
 ```
 # Usually, we need to shift reads for footprints detection. Here we use HINT-ATAC for footprintings and need to modify config file by yourself
 # HINT-ATAC can correct Tn5 bias automatically and thus shifting reads unnessarily
@@ -73,3 +74,8 @@ y <- annotatePeak(ATACpeak, tssRegion=c(-3000, 3000), TxDb=txdb, addFlankGeneInf
 write.table(as.data.frame(y), file="MY_NFR_MACS2_peaks.narrowPeakAnno.xls", sep='\t', quote = F)
 plotAnnoPie(y)
 ```
+
+
+
+
+
