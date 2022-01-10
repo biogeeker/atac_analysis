@@ -15,5 +15,23 @@ $ bowtie2 --very-sensitive -X 1000 -x psojae -1 S025_jiyi-A_MY_AHVMTLCCXY_S5_L00
 
 The third step is carried out to post-alignment QC:
 ```
+# filtering, retain properly paired reads
+# -f 3: only include alignments marked with the SAM flag 3, which means "properly paired and mapped"
+$ samtools view -bh -f 3 MY_sorted.bam > MY_sorted_filtered.bam
+
+# remove PCR duplicates. Here we use the GATK v4.1.
+$ export PATH=/home/wy/disk/aATAC-seq/tools/gatk-4.1.4.1/:$PATH
+$ gatk MarkDuplicates --REMOVE_DUPLICATES TRUE -I MY_sorted_filtered.bam -M MY_dups_metrics.txt -O MY_noDups.bam
+
+# plot fragment size figures
+$ gatk CollectInsertSizeMetrics -I MY_noDups.bam -O MY_insert_size_metrics.txt -H MY_histogram.pdf -M 0.5
+```
+
+The forth step is to call peaks:
+```
+# We use macs2 to call peaks.
+# only call NFR peaks
+./split_bam.sh in.bam 147
+
 
 ```
