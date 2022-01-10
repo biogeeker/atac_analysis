@@ -53,7 +53,7 @@ $ rgt-motifanalysis matching --organism=ps11 --input-files my_atac/MY_NFR_Footpr
 
 ```
 
-The sixth step is to annotate peaks and enrich motifs
+The sixth step is to annotate peaks and enrich motifs:
 ```
 # Use R ChIPseeker for annotating peaks 
 
