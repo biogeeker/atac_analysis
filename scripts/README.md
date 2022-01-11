@@ -31,7 +31,9 @@ $ gatk CollectInsertSizeMetrics -I MY_noDups.bam -O MY_insert_size_metrics.txt -
 ```
 
 The forth step is to call peaks:
->If you followed original protocol for ATAC-Seq, you should get Paired-End reads. If so, I would suggest you just use --format BAMPE to let MACS2 pileup the whole fragments in general. But if you want to focus on looking for where the ‘cutting sites’ are, then --nomodel --shift -100 --extsize 200 should work. —— By Liu
+
+>If you followed original protocol for ATAC-Seq, you should get Paired-End reads. If so, I would suggest you just use --format BAMPE to let MACS2 pileup the whole fragments in general. But if you want to focus on looking for where the ‘cutting sites’ are, then --nomodel --shift -100 --extsize 200 should work. --By Liu
+
 ```
 # We use macs2 to call peaks
 # only call NFR peaks
@@ -75,7 +77,11 @@ write.table(as.data.frame(y), file="MY_NFR_MACS2_peaks.narrowPeakAnno.xls", sep=
 plotAnnoPie(y)
 ```
 
+Other commands:
+- Calculate openness "cut sites" using NucleoATAC package.
+```
+$ dnase_cut_counter.py -A MY_NFR_MACS2_peaks.narrowPeak MY_NFR130.bam cut_sites.txt
+```
 
-
-
+And so on.
 
