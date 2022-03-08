@@ -77,6 +77,7 @@ ATACpeak <- readPeakFile("MY_NFR_MACS2_peaks.narrowPeak")
 y <- annotatePeak(ATACpeak, tssRegion=c(-3000, 3000), TxDb=txdb, addFlankGeneInfo=TRUE, flankDistance=4000)
 
 write.table(as.data.frame(y), file="MY_NFR_MACS2_peaks.narrowPeakAnno.xls", sep='\t', quote = F)
+# Visualize the result
 plotAnnoPie(y)
 # Note: the table header position may be incorrect in the first row
 ```
@@ -87,5 +88,13 @@ plotAnnoPie(y)
 $ dnase_cut_counter.py -A MY_NFR_MACS2_peaks.narrowPeak MY_NFR130.bam cut_sites.txt
 ```
 
-And so on.
+- HMMRATAC is designed to analyze ATAC-seq data, maybe you will try it
+```
+samtools sort ATACseq.bam -o ATACseq.sorted.bam
+samtools index ATACseq.sorted.bam ATACseq.sorted.bam.bai
+samtools view -H ATACseq.sorted.bam| perl -ne 'if(/^@SQ.*?SN:(\w+)\s+LN:(\d+)/){print $1,"\t",$2,"\n"}' > genome.info
+java -jar HMMRATAC_V1.2.4_exe.jar -b ATACseq.sorted.bam -i ATACseq.sorted.bam.bai -g genome.info
+awk -v OFS="\t" '$13>=10 {print}' NAME_peaks.gappedPeak > NAME.filteredPeaks.gappedPeak
+awk -v OFS="\t" '$5>=10 {print}' NAME_summits.bed > NAME.filteredSummits.bed
+```
 
