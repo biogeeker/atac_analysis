@@ -47,9 +47,9 @@ $ macs2 callpeak -f BAMPE -g 8.8e7 --keep-dup all -n MY_NFR -t MY_NFR.bam --outd
 ```
 
 **5. Detect TF footprints using [RGT-HINT](http://www.regulatory-genomics.org/motif-analysis/introduction/)**
+>For peak calling, The paper mentioned "all reads aligning to + strand were offset by +4 bp, all reads aligning to the - strand are offset -5 bp". The offsets are only really important when doing TF footprinting. HINT-ATAC can correct Tn5 bias automatically and thus shifting reads unnessarily.
 ```
-# Usually, we need to shift reads for footprints detection. Here we use HINT-ATAC for footprintings and need to modify config file by yourself
-# HINT-ATAC can correct Tn5 bias automatically and thus shifting reads unnessarily
+# Here we use HINT-ATAC for footprintings and need to modify config file by yourself
 $ rgt-hint footprinting --atac-seq --organism=ps11 --paired-end --output-location=my_atac --output-prefix=MY_NFR_Footprint ./MY_NFR.bam ./MY_NFR_MACS2_peaks.narrowPeak
 # Generate bias corrected bw file for genome browser visualizing
 $ rgt-hint tracks --bc --bigWig --organism=ps11 ./MY_NFR.bam ./MY_NFR_MACS2_peaks.narrowPeak --output-location=my_atac --output-prefix=MY_NFR
@@ -82,7 +82,7 @@ plotAnnoPie(y)
 # Note: the table header position may be incorrect in the first row
 ```
 
-**Other commands**
+**7. Other commands**
 - Calculate openness "cut sites" using NucleoATAC package.
 ```
 $ dnase_cut_counter.py -A MY_NFR_MACS2_peaks.narrowPeak MY_NFR130.bam cut_sites.txt
