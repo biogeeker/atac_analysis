@@ -84,12 +84,12 @@ plotAnnoPie(y)
 ```
 
 ### Other commands
-- Calculate openness "cut sites" using NucleoATAC package.
+>Calculate openness "cut sites" using NucleoATAC package
 ```
 $ dnase_cut_counter.py -A MY_NFR_MACS2_peaks.narrowPeak MY_NFR130.bam cut_sites.txt
 ```
 
-- HMMRATAC is designed to analyze ATAC-seq data, maybe you will try it
+>HMMRATAC is designed to analyze ATAC-seq data, maybe you will try it
 ```
 samtools sort ATACseq.bam -o ATACseq.sorted.bam
 samtools index ATACseq.sorted.bam ATACseq.sorted.bam.bai
