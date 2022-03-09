@@ -1,6 +1,7 @@
+### ATAC analysis pipeline
 The workflow is designed for ATAC-seq analysis in article "*ATAC-seq reveals the landscape of open chromatin and cis-regulatory elements in the *Phytophthora sojae* genome*". The sequencing data can be downloaded from NCBI *BioProject accession number PRJNA761250*.
 
-**1. Remove low quality reads and adaptors in raw data**
+##### Remove low quality reads and adaptors in raw data
 ```
 # Here we use trim_galore do this job.
 $ trim_galore -q 25 --phred33 --length 35 -e 0.1 --stringency 4 --paired -o clean/ ./S025_jiyi-A_MY_AHVMTLCCXY_S5_L006_R1_001.fastq.gz ./S025_jiyi-A_MY_AHVMTLCCXY_S5_L006_R2_001.fastq.gz
@@ -9,7 +10,7 @@ $ fastqc -o ./ clean/*gz
 $ multiqc ./
 ```
 
-**2. Map clean reads to the *P. sojae* reference genome**
+##### Map clean reads to the *P. sojae* reference genome
 ```
 # Firstly, build genome index
 $ bowtie2-build Psojae11.fasta psojae
@@ -17,7 +18,7 @@ $ bowtie2-build Psojae11.fasta psojae
 $ bowtie2 --very-sensitive -X 1000 -x psojae -1 S025_jiyi-A_MY_AHVMTLCCXY_S5_L006_R1_001_val_1.fq.gz -2 S025_jiyi-A_MY_AHVMTLCCXY_S5_L006_R2_001_val_2.fq.gz | samtools sort -@ 6 -O bam -o MY_sorted.bam
 ```
 
-**3. Post-alignment quality control**
+##### Post-alignment quality control
 ```
 # Filtering, retain properly paired reads
 # -f 3: only include alignments marked with the SAM flag 3, which means "properly paired and mapped"
@@ -34,7 +35,7 @@ $ samtools index MY_noDups.bam
 $ gatk CollectInsertSizeMetrics -I MY_noDups.bam -O MY_insert_size_metrics.txt -H MY_histogram.pdf -M 0.5
 ```
 
-**4. Call peaks**
+##### Call peaks
 
 >If you followed original protocol for ATAC-Seq, you should get Paired-End reads. If so, I would suggest you just use --format BAMPE to let MACS2 pileup the whole fragments in general. But if you want to focus on looking for where the ‘cutting sites’ are, then --nomodel --shift -100 --extsize 200 should work. --By Liu
 
@@ -46,7 +47,7 @@ $ macs2 callpeak -f BAMPE -g 8.8e7 --keep-dup all -n MY_NFR -t MY_NFR.bam --outd
 # Filtering blacklist regions: this is very important in calling peaks, but non-model speceis don not have marked black list regions well. I speculated that extreme peaks may represent the candidata black list regions. And so, we can mask it using seqtk and re-run masc2 call peaks again.
 ```
 
-**5. Detect TF footprints using [RGT-HINT](http://www.regulatory-genomics.org/motif-analysis/introduction/)**
+##### Detect TF footprints using [RGT-HINT](http://www.regulatory-genomics.org/motif-analysis/introduction/)
 >For peak calling, The paper mentioned "all reads aligning to + strand were offset by +4 bp, all reads aligning to the - strand are offset -5 bp". The offsets are only really important when doing TF footprinting. HINT-ATAC can correct Tn5 bias automatically and thus shifting reads unnessarily.
 ```
 # Here we use HINT-ATAC for footprintings and need to modify config file by yourself
@@ -59,7 +60,7 @@ $ rgt-motifanalysis matching --organism=ps11 --input-files my_atac/MY_NFR_Footpr
 # Also, we can modify customized footprints file to generate footprintings by meme-suite motifs coordinate files. We can visualize the peak-dip-peak of motifs. It is very interesting.
 ```
 
-**6. Annotate peaks and enrich motifs**
+##### Annotate peaks and enrich motifs
 ```
 # Use R ChIPseeker for annotating peaks 
 
@@ -82,7 +83,7 @@ plotAnnoPie(y)
 # Note: the table header position may be incorrect in the first row
 ```
 
-**7. Other commands**
+##### Other commands
 - Calculate openness "cut sites" using NucleoATAC package.
 ```
 $ dnase_cut_counter.py -A MY_NFR_MACS2_peaks.narrowPeak MY_NFR130.bam cut_sites.txt
