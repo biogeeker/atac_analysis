@@ -1,5 +1,5 @@
 # *P. sojae* ATAC-seq analysis pipeline
-The workflow is designed for ATAC-seq analysis in article "*ATAC-seq reveals the landscape of open chromatin and cis-regulatory elements in the *Phytophthora sojae* genome*". The sequencing data can be downloaded from NCBI: *[BioProject accession number PRJNA761250]*.
+>The workflow is designed for ATAC-seq analysis in article "*ATAC-seq reveals the landscape of open chromatin and cis-regulatory elements in the *Phytophthora sojae* genome*". The sequencing data can be downloaded from NCBI: *[BioProject accession number PRJNA761250]*.
 
 ### Remove low quality reads and adaptors in raw data
 ```
